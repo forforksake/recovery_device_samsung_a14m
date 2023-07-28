@@ -1,0 +1,14 @@
+#<src>                                             <mnt_point>    <type>    <mnt_flags and options>    <fs_mgr_flags>
+system                                               /system       erofs        ro,barrier=1      wait,logical,first_stage_mount
+system                                               /system       f2fs        ro,barrier=1      wait,logical,first_stage_mount
+system                                               /system       ext4        ro,barrier=1      wait,logical,first_stage_mount
+vendor                                               /vendor       erofs        ro,barrier=1      wait,logical,first_stage_mount
+product                                              /product      erofs        ro,barrier=1      wait,logical,first_stage_mount
+odm                                                  /odm          erofs        ro,barrier=1      wait,logical,first_stage_mount
+
+#data
+/dev/block/platform/bootdevice/by-name/userdata	     /data	       f2fs	       noatime,nosuid,nodev,discard,usrquota,grpquota,fsync_mode=nobarrier,reserve_root=32768,resgid=5678,whint_mode=fs-based,inlinecrypt	wait,check,,quota,reservedsize=128M,latemount,,checkpoint=fs,fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized,keydirectory=/metadata/vold/metadata_encryption,fsverity,fscompress
+/dev/block/platform/bootdevice/by-name/metadata      /metadata     ext4        defaults          wait,first_stage_mount
+
+#misc
+/dev/block/platform/bootdevice/by-name/misc          /misc         emmc        defaults          recoveryonly

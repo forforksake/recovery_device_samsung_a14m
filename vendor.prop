@@ -1,0 +1,16 @@
+####################################
+# from generate-common-build-props
+# These properties identify this partition image.
+####################################
+persist.sys.usb.config=mtp,adb
+
+#crypto
+ro.vendor.mtk_tee_gp_support=1
+ro.hardware.kmsetkey=trustonic
+ro.hardware.keystore=mdfpp
+ro.hardware.keystore_desede=true
+ro.security.keystore.keytype=gak,
+ro.crypto.volume.filenames_mode=aes-256-cts
+ro.crypto.metadata_init_delete_all_keys.enabled=false
+ro.vendor.mtk_teegris_tee_support=1
+ro.hardware.kmsetkey=trustonic

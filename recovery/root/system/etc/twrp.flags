@@ -13,8 +13,8 @@
 /recovery     emmc     /dev/block/platform/bootdevice/by-name/recovery  flags=backup=1;display="Recovery";flashimg;
 
 # SD Card & USB-OTG Points
-/sdcard1            vfat      /dev/block/mmcblk0p1         /dev/block/mmcblk0                       flags=fsflags=utf8;display="MicroSD";storage;wipeingui;removable
+/sdcard1            vfat      /dev/block/mmcblk1p1         /dev/block/mmcblk1                       flags=fsflags=utf8;display="MicroSD";storage;wipeingui;removable
 /usb_otg            vfat      /dev/block/sdd1              /dev/block/sdd                           flags=fsflags=utf8;display="USB-Storage";storage;wipeingui;removable;
 
-## Internal storage (for OrangeFox)
+## Internal storage (Ofox Requirement)
 /storage            f2fs      /data/media/0                                                         flags=display="Internal Storage";usermrf;backup=1;fsflags="bind";removable;

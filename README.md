@@ -1,5 +1,12 @@
-# recovery_device_samsung_a14m
- Recovery Tree for Samsung Galaxy A14
+### Samsung Galaxy A14 (Mediatek) - Android Recovery Device Tree
+
+| **Prop** | **spec** |
+| --- | --- |
+| `Codename` | **A14m** |
+| `Model` | **SM-A145P** |
+| `Board` | **MediaTek MT679V (MT6768)** |
+| `Chipset` | **Helio G80** |
+| `OS` | **Android 13** |
 
 ### TOUCHSCREEN
 
@@ -16,3 +23,19 @@
 
 - removed crypto files for this build
 - prepped BoardConfig for future A13 Crypto development.
+
+### Kernel
+
+https://github.com/forforksake/android_kernel_samsung_a145p
+
+### THANKS
+
+Thanks to Physwizz initial device tree & kernel commits,
+SebaUbuntu's awesome twrpdtgen
+plus all the contributors to TWRP ofcourse.
+
+C F K o d @ X D A
+
+@Cardiffian
+[Telegram](https://t.me/cardiffian)
+

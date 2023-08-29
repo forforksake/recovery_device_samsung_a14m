@@ -1,20 +1,38 @@
-/boot         emmc     /dev/block/platform/bootdevice/by-name/boot      flags=backup=1;display="Boot";flashimg;
-/cache        ext4     /dev/block/platform/bootdevice/by-name/cache     flags=backup=1;display="Cache";
-/efs          ext4     /dev/block/platform/bootdevice/by-name/sec_efs   flags=backup=1;display="EFS";
+# block device - multiple to allow custom roms
+/system        erofs         /dev/block/mapper/system                                        flags=backup=1;display="System";
+/system        ext4          /dev/block/mapper/system                                        flags=backup=1;display="System";
+/system        f2fs          /dev/block/mapper/system                                        flags=backup=1;display="System";
+/vendor        erofs         /dev/block/mapper/vendor                                        flags=backup=1;display="Vendor";
+/vendor        ext4          /dev/block/mapper/vendor                                        flags=backup=1;display="Vendor";
+/vendor        f2fs          /dev/block/mapper/vendor                                        flags=backup=1;display="Vendor";
+/odm           erofs         /dev/block/mapper/odm                                           flags=backup=1;display="Odm";
+/odm           ext4          /dev/block/mapper/odm                                           flags=backup=1;display="Odm";
+/odm           f2fs          /dev/block/mapper/odm                                           flags=backup=1;display="Odm";
+/product       erofs         /dev/block/mapper/product                                       flags=backup=1;display="Product";
+/product       ext4          /dev/block/mapper/product                                       flags=backup=1;display="Product";
+/product       f2fs          /dev/block/mapper/product                                       flags=backup=1;display="Product";
 
-#
-/nvram        emmc     /dev/block/platform/bootdevice/by-name/nvram     flags=display="NVRAM";backup=1;
-/nvcfg        emmc     /dev/block/platform/bootdevice/by-name/nvcfg     flags=display="NVCFG";backup=1;subpartitionof=/nvram;
-/nvdata       emmc     /dev/block/platform/bootdevice/by-name/nvdata    flags=display="NVDATA";backup=1;subpartitionof=/nvram;
 
-/optics       ext4     /dev/block/platform/bootdevice/by-name/optics    flags=backup=1;flashimg;display="Optics";
-/prism        ext4     /dev/block/platform/bootdevice/by-name/prism     flags=backup=1;flashimg;display="Prism";
+/boot         emmc     /dev/block/platform/bootdevice/by-name/boot                          flags=backup=1;display="Boot";flashimg;
+/cache        ext4     /dev/block/platform/bootdevice/by-name/cache                         flags=backup=1;display="Cache";
+/efs          ext4     /dev/block/platform/bootdevice/by-name/sec_efs                       flags=backup=1;display="EFS";
 
-/recovery     emmc     /dev/block/platform/bootdevice/by-name/recovery  flags=backup=1;display="Recovery";flashimg;
+# Samsung ODE
+/keydata      emmc     /dev/block/platform/bootdevice/by-name/keydata                       flags=display="Keydata";
+/keyrefuge	  emmc	   /dev/block/platform/bootdevice/by-name/keyrefuge                     flags=display="Keyrefuge";
+
+/nvram        emmc     /dev/block/platform/bootdevice/by-name/nvram                         flags=display="NVRAM";backup=1;
+/nvcfg        ext4     /dev/block/platform/bootdevice/by-name/nvcfg                         flags=display="NVCFG";backup=1;subpartitionof=/nvram;
+/nvdata       ext4     /dev/block/platform/bootdevice/by-name/nvdata                        flags=display="NVDATA";backup=1;subpartitionof=/nvram;
+
+/optics       ext4     /dev/block/platform/bootdevice/by-name/optics                        flags=backup=1;flashimg;display="Optics";
+/prism        ext4     /dev/block/platform/bootdevice/by-name/prism                         flags=backup=1;flashimg;display="Prism";
+
+/recovery     emmc     /dev/block/platform/bootdevice/by-name/recovery                      flags=backup=1;display="Recovery";flashimg;
 
 # SD Card & USB-OTG Points
-/sdcard1            vfat      /dev/block/mmcblk1p1         /dev/block/mmcblk1                       flags=fsflags=utf8;display="MicroSD";storage;wipeingui;removable
-/usb_otg            vfat      /dev/block/sdd1              /dev/block/sdd                           flags=fsflags=utf8;display="USB-Storage";storage;wipeingui;removable;
+/sdcard1      vfat    /dev/block/mmcblk1p1         /dev/block/mmcblk1                       flags=fsflags=utf8;display="MicroSD";storage;wipeingui;removable;
+/usb_otg      vfat    /dev/block/sdd1              /dev/block/sdd                           flags=fsflags=utf8;display="USB-Storage";storage;wipeingui;removable;
 
 ## Internal storage (Ofox Requirement)
-/storage            f2fs      /data/media/0                                                         flags=display="Internal Storage";usermrf;backup=1;fsflags="bind";removable;
+/storage            f2fs      /data/media/0                                                 flags=display="Internal Storage";usermrf;backup=1;fsflags="bind";removable;

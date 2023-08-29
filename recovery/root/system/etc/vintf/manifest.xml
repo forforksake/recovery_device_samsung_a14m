@@ -2,7 +2,7 @@
     Input:
         manifest.xml
 -->
-<manifest version="5.0" type="framework">
+<manifest version="4.0" type="framework">
     <hal format="hidl" max-level="6">
         <name>android.frameworks.displayservice</name>
         <transport>hwbinder</transport>
@@ -86,6 +86,11 @@
     <hal format="native">
         <name>netutils-wrapper</name>
         <version>1.0</version>
+    </hal>
+     <hal format="aidl">
+        <name>android.system.keystore2</name>
+        <version>1</version>
+        <fqname>IKeystoreService/default</fqname>
     </hal>
     <system-sdk>
         <version>28</version>

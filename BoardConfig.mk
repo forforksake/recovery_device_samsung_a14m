@@ -1,7 +1,5 @@
-DEVICE_PATH := device/samsung/a14m
 
-# For building with minimal manifest
-ALLOW_MISSING_DEPENDENCIES := true
+DEVICE_PATH := device/samsung/a14m
 
 # Architecture
 TARGET_ARCH := arm64
@@ -17,9 +15,6 @@ TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := generic
 TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a55
-
-# APEX
-DEXPREOPT_GENERATE_APEX_IMAGE := true
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := a14m
@@ -42,7 +37,7 @@ BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_KERNEL_SEPARATED_DTBO := true
-TARGET_KERNEL_CONFIG := a14m_defconfig
+TARGET_KERNEL_CONFIG := ffs_a14m_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/a14m
 
 # Kernel - prebuilt
@@ -67,7 +62,7 @@ BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_COPY_OUT_VENDOR := vendor
 BOARD_SUPER_PARTITION_SIZE := 9126805504 # TODO: Fix hardcoded value
 BOARD_SUPER_PARTITION_GROUPS := samsung_dynamic_partitions
-BOARD_SAMSUNG_DYNAMIC_PARTITIONS_PARTITION_LIST := system system system vendor product odm
+BOARD_SAMSUNG_DYNAMIC_PARTITIONS_PARTITION_LIST := system vendor product odm
 BOARD_SAMSUNG_DYNAMIC_PARTITIONS_SIZE := 9122611200 # TODO: Fix hardcoded value
 
 # Platform
@@ -98,8 +93,9 @@ TW_THEME := portrait_hdpi
 TW_EXTRA_LANGUAGES := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
-TW_DEVICE_VERSION := 1_CFkod_XDA
-TW_USES_VENDOR_LIBS := true
+TW_DEVICE_VERSION := 2_CFkod_XDA
+PRODUCT_ENFORCE_VINTF_MANIFEST := true
+PRODUCT_FULL_TREBLE := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 RECOVERY_SDCARD_ON_DATA := true
 TW_Y_OFFSET := 65
@@ -117,11 +113,11 @@ TW_SCREEN_BLANK_ON_BOOT := true
 
 # future Crypto Arguements
 TW_INCLUDE_CRYPTO := true
+#TW_PREPARE_DATA_MEDIA_EARLY := true
 TW_INCLUDE_CRYPTO_FBE := true
 TW_INCLUDE_FBE_METADATA_DECRYPT := true
 BOARD_USES_METADATA_PARTITION := true
 BOARD_ROOT_EXTRA_FOLDERS += metadata
-
 
 # Development Help Touchscreen and Future Crypto
 TWRP_INCLUDE_LOGCAT := true
@@ -130,7 +126,10 @@ TARGET_USES_LOGD := true
 # Backups
 TW_BACKUP_EXCLUSIONS := /data/fonts
 
-# Build Debug
+# Build Assist
 BUILD_BROKEN_DUP_RULES := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+ALLOW_MISSING_DEPENDENCIES := true
+
+# mtk legacy fstab
 TW_LEGACY_PROCESS_FSTAB := true

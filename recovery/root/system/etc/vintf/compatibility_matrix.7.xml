@@ -779,6 +779,14 @@
             <instance>default</instance>
         </interface>
     </hal>
+    <hal format="aidl" optional="true">
+        <name>android.system.keystore2</name>
+        <version>1</version>
+        <interface>
+            <name>IKeystoreService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
     <kernel version="5.10.107" level="7">
         <config>
             <key>CONFIG_ADVISE_SYSCALLS</key>

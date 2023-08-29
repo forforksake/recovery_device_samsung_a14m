@@ -1,0 +1,47 @@
+n post-fs
+# TEEGRIS service
+    mkdir /mnt/vendor/efs/tee 0700 root root
+    mkdir /dev/socket/iwt 0770 root root
+    mkdir /dev/socket/iwt/ca 0770 root root
+    start tz_service
+    wait_for_prop vendor.tzdaemon Ready
+    setprop vendor.TEEGRIS.loaded true
+    write /proc/iccc_ready 1
+    start tzts_service
+    wait_for_prop vendor.tzts_daemon Ready
+
+on post-fs-data
+# TEEGRIS service
+    mkdir /data/vendor/tee 0700 root root
+
+service tz_service /vendor/bin/tzdaemon
+    class core
+    user root
+    group system readproc
+    disabled
+    seclabel u:r:recovery:s0
+
+service tzts_service /vendor/bin/tzts_daemon
+    class core
+    user root
+    group system
+    disabled
+    seclabel u:r:recovery:s0
+
+
+# Gatekeeper & Keys
+on property:hwservicemanager.ready=true && property:crypto.ready=1
+    start keystore2
+    start vendor.gatekeeper-1-0
+
+on property:twrp.all.users.decrypted=true && property:twrp.decrypt.done=true
+    setprop crypto.ready 0
+    stop vendor.gatekeeper-1-0
+
+service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
+    interface android.hardware.gatekeeper@1.0::IGatekeeper default
+    class hal
+    user root
+    group system 5678
+    seclabel u:r:recovery:s0
+

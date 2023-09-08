@@ -1,7 +1,5 @@
 import /init.recovery.samsung.rc
 import /teegris_v4.rc
-#import /vendor_init_as_system.rc
-#import /meta_init.system.rc
 
 on init
     setprop sys.usb.configfs 1

@@ -1,42 +1,38 @@
-n post-fs
+#on post-fs
 # TEEGRIS service
-    mkdir /mnt/vendor/efs/tee 0700 root root
-    mkdir /dev/socket/iwt 0770 root root
-    mkdir /dev/socket/iwt/ca 0770 root root
-    start tz_service
-    wait_for_prop vendor.tzdaemon Ready
-    setprop vendor.TEEGRIS.loaded true
-    write /proc/iccc_ready 1
-    start tzts_service
-    wait_for_prop vendor.tzts_daemon Ready
-
-on post-fs-data
-# TEEGRIS service
-    mkdir /data/vendor/tee 0700 root root
-
-service tz_service /vendor/bin/tzdaemon
-    class core
-    user root
-    group system readproc
-    disabled
-    seclabel u:r:recovery:s0
-
-service tzts_service /vendor/bin/tzts_daemon
-    class core
-    user root
-    group system
-    disabled
-    seclabel u:r:recovery:s0
+#    mkdir /mnt/vendor/efs/tee 0700 root root
+#    mkdir /dev/socket/iwt 0770 root root
+#    mkdir /dev/socket/iwt/ca 0770 root root
+#    start tz_service
+#    wait_for_prop vendor.tzdaemon Ready
+#    setprop vendor.TEEGRIS.loaded true
+#    write /proc/iccc_ready 1
+#    start tzts_service
+#    wait_for_prop vendor.tzts_daemon Ready
 
 
 # Gatekeeper & Keys
-on property:hwservicemanager.ready=true && property:crypto.ready=1
+on property:hwservicemanager.ready=true
     start keystore2
     start vendor.gatekeeper-1-0
+    start gatekeeper-1-0
+    start vendor.keymint-default
+    start keymint-default
+    start vendor.keymaster-3-0
+    start vendor.keymaster-3-0-trustonic
+    start vendor.keymaster-4-0
+    start vendor.keymaster-4-0-trustonic
+    start vendor.keymaster-4-0-beanpod
+    start vendor.keymaster-4-1
+    start vendor.keymaster-4-1-trustonic
+    start vendor.keymaster-4-1-beanpod
+    start keymaster_attestation-1-1
+    exec_start wait_for_keymaster
 
-on property:twrp.all.users.decrypted=true && property:twrp.decrypt.done=true
+on property:twrp.all.users.decrypted=true
     setprop crypto.ready 0
     stop vendor.gatekeeper-1-0
+    stop gatekeeper-1-0
 
 service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
     interface android.hardware.gatekeeper@1.0::IGatekeeper default
@@ -44,4 +40,25 @@ service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-ser
     user root
     group system 5678
     seclabel u:r:recovery:s0
+
+service vendor.keymint-default /vendor/bin/hw/android.hardware.security.keymint-service
+    class early_hal
+    user root
+    group system drmrpc
+    seclabel u:r:recovery:s0
+
+service tz_service /vendor/bin/tzdaemon
+    class core
+    user root
+    group root readproc
+    disabled
+    seclabel u:r:recovery:s0
+
+service tzts_service /vendor/bin/tzts_daemon
+    class core
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
 

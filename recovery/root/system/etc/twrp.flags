@@ -22,8 +22,6 @@
 /keyrefuge	  emmc	   /dev/block/platform/bootdevice/by-name/keyrefuge                     flags=display="Keyrefuge";
 
 /nvram        emmc     /dev/block/platform/bootdevice/by-name/nvram                         flags=display="NVRAM";backup=1;
-/nvcfg        ext4     /dev/block/platform/bootdevice/by-name/nvcfg                         flags=display="NVCFG";backup=1;subpartitionof=/nvram;
-/nvdata       ext4     /dev/block/platform/bootdevice/by-name/nvdata                        flags=display="NVDATA";backup=1;subpartitionof=/nvram;
 
 /optics       ext4     /dev/block/platform/bootdevice/by-name/optics                        flags=backup=1;flashimg;display="Optics";
 /prism        ext4     /dev/block/platform/bootdevice/by-name/prism                         flags=backup=1;flashimg;display="Prism";

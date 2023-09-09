@@ -1,18 +1,47 @@
-#on post-fs
-# TEEGRIS service
-#    mkdir /mnt/vendor/efs/tee 0700 root root
-#    mkdir /dev/socket/iwt 0770 root root
-#    mkdir /dev/socket/iwt/ca 0770 root root
-#    start tz_service
-#    wait_for_prop vendor.tzdaemon Ready
-#    setprop vendor.TEEGRIS.loaded true
-#    write /proc/iccc_ready 1
-#    start tzts_service
-#    wait_for_prop vendor.tzts_daemon Ready
+on init
+    # Create the mountpoint for mnt/vendor partitions
+    mkdir /mnt/vendor/persist 0771 root root
+    mkdir /mnt/vendor/efs 0771 root root
+    mkdir /mnt/vendor/protect_f 0770 root root
+    mkdir /mnt/vendor/protect_s 0770 root root
+    mkdir /mnt/vendor/nvcfg 0771 root root
+    mkdir /mnt/vendor/nvdata 0771 root root
+
+on post-fs
+    chown system system /mnt/vendor/protect_f
+    restorecon /mnt/vendor/protect_f
+    mount ext4 /dev/block/by-name/protect_f /mnt/vendor/protect_f rw
+
+    chown system system /mnt/vendor/protect_s
+    restorecon /mnt/vendor/protect_s
+    mount ext4 /dev/block/by-name/protect_s /mnt/vendor/protect_s rw
+
+    chown system system /mnt/vendor/nvcfg
+    restorecon /mnt/vendor/nvcfg
+    mount ext4 /dev/block/by-name/nvcfg /mnt/vendor/nvcfg rw
+    restorecon_recursive /mnt/vendor/nvcfg
+
+    chown root system /mnt/vendor/nvdata
+    restorecon /mnt/vendor/nvdata
+    mount ext4 /dev/block/by-name/nvdata /mnt/vendor/nvdata rw
+    restorecon_recursive /mnt/vendor/nvdata
+
+    chown system system /mnt/vendor/efs
+    restorecon /mnt/vendor/efs
+    mount ext4 /dev/block/by-name/efs /mnt/vendor/efs rw
+    restorecon_recursive /mnt/vendor/efs
+
+    chown system system /mnt/vendor/persist
+    #We restorecon /mnt/vendor/persist to set SEPolicy label.
+    restorecon /mnt/vendor/persist
+    mount ext4 /dev/block/by-name/persist /mnt/vendor/persist rw
 
 
 # Gatekeeper & Keys
-on property:hwservicemanager.ready=true
+on property:hwservicemanager.ready=true & property:ro.crypto.state=encrypted
+    start tz_service
+    setprop vendor.TEEGRIS.loaded true
+    start tzts_service
     start keystore2
     start vendor.gatekeeper-1-0
     start gatekeeper-1-0
